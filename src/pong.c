@@ -7,18 +7,18 @@
 #define W_DIV 40
 #define H_DIV 25/2
 
-int res1 = 0;
-int res2 = 0;
-
-int x_ball;
-int y_ball;
+int x_ball = W_DIV;
+int y_ball = H_DIV;
 int r_racket = H_DIV;
 int l_racket = H_DIV;
+int dx = -1;
+int dy = -1;
 
 void draw_pong();
 void series();
 void pong();
 void clear();
+void move();
 
 int main() {
     pong();
@@ -37,11 +37,11 @@ void draw_pong() {
             } else if (x == 0 || x == WIDTH - 1) {
                 printf("#");
             } else if (x == 3 && (y == l_racket || y == l_racket - 1 || y == l_racket + 1)) {
-                printf("]");
+                printf("\x1b[32m]\x1b[0m");
             } else if (x == WIDTH - 4 && (y == r_racket || y == r_racket - 1 || y == r_racket + 1)) {
-                printf("["); 
+                printf("\x1b[32m[\x1b[0m"); 
             } else if (x == x_ball && y == y_ball) {
-                printf("@");
+                printf("\x1b[32m@\x1b[0m");
             } else if (x == W_DIV) {
                 printf(".");
             } else {
@@ -53,19 +53,30 @@ void draw_pong() {
 }  
 
 void series() {
-    while(res1 < 21 || res2 < 21) {
+    while(1) {
+        clear();
         draw_pong();
         char c;
-        if (scanf("%c", c) == 1) {
+        if (scanf("%c", &c) == 1) {
             if (c == 'A' || c == 'a') ++l_racket;
-            else if (c == 'Z' || c == 'z') --l_racket;
-            else if (c == 'K' || c == 'k') ++r_racket;
-            else if (c == 'M' || c == 'm') --r_racket;
-            clear();
+            if (c == 'Z' || c == 'z') --l_racket;
+            if (c == 'K' || c == 'k') ++r_racket;
+            if (c == 'M' || c == 'm') --r_racket;
+            if (c == 'Q' || c == 'q') break;
         }
+        move();
     }
 }
 
+void move() {
+    x_ball += dx;
+    y_ball += dy;
+
+    if (y_ball <= 2) dy = 1;
+    if (y_ball >= HEIGHT -2) dy = -1;
+
+}
+
 void clear() {
-    for (int i = 0; i < 50; ++i) printf("\n");
+    for (int i = 0; i < 3; ++i) printf("\n");
 }

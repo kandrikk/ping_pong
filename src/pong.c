@@ -21,8 +21,12 @@ void pong();
 void clear();
 
 int main() {
-    draw_pong();
+    pong();
     return 0;
+}
+
+void pong() {
+    series();
 }
 
 void draw_pong() {
@@ -36,7 +40,7 @@ void draw_pong() {
                 printf("]");
             } else if (x == WIDTH - 4 && (y == r_racket || y == r_racket - 1 || y == r_racket + 1)) {
                 printf("["); 
-            } else if (x == W_DIV && y == H_DIV) {
+            } else if (x == x_ball && y == y_ball) {
                 printf("@");
             } else if (x == W_DIV) {
                 printf(".");
@@ -50,16 +54,18 @@ void draw_pong() {
 
 void series() {
     while(res1 < 21 || res2 < 21) {
+        draw_pong();
         char c;
-        scanf("%c", c);
-        if (c == 'A' || c == 'a') {
-            l_racket += 1;
-        } else if (c == 'Z' || c == 'z') {
-            l_racket -= 1;
-        } else if (c == 'K' || c == 'k') {
-            r_racket += 1;
-        } else if (c == 'M' || c == 'm') {
-            r_racket -= 1;
+        if (scanf("%c", c) == 1) {
+            if (c == 'A' || c == 'a') ++l_racket;
+            else if (c == 'Z' || c == 'z') --l_racket;
+            else if (c == 'K' || c == 'k') ++r_racket;
+            else if (c == 'M' || c == 'm') --r_racket;
+            clear();
         }
     }
+}
+
+void clear() {
+    for (int i = 0; i < 50; ++i) printf("\n");
 }

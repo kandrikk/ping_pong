@@ -6,8 +6,8 @@
 
 int x_ball = WIDTH/2;
 int y_ball = HEIGHT/2;
-int r_racket = HEIGHT/2;
-int l_racket = HEIGHT/2;
+int r_racket = 11;
+int l_racket = 11;
 
 int dx = -1;
 int dy = -1;
@@ -28,6 +28,12 @@ int main() {
 
 void pong() {
     initscr();
+    start_color();
+    init_pair(1, COLOR_YELLOW, COLOR_YELLOW); // поле верх низ право лево
+    init_pair(2, COLOR_RED, COLOR_RED);  // ракетки left
+    init_pair(22, COLOR_BLUE, COLOR_BLUE); //  right
+    init_pair(3, COLOR_WHITE, COLOR_BLACK); // мячик
+    
     noecho();
     cbreak();
 
@@ -42,20 +48,32 @@ void draw_pong() {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
             if (y == 0 || y == HEIGHT - 1) {
-                mvaddch(y, x, '*');
+                attron(COLOR_PAIR(1));
+                mvaddch(y, x, ' ');
+                attroff(COLOR_PAIR(1));
             } else if (x == 0 || x == WIDTH - 1) {
-                mvaddch(y, x, '#');
-            } else if (x == 3 && (y == l_racket || y == l_racket - 1 || y == l_racket + 1)) {
-                mvaddch(y, x, ']');
-            } else if (x == WIDTH - 4 && (y == r_racket || y == r_racket - 1 || y == r_racket + 1)) {
-                mvaddch(y, x, '[');
+                attron(COLOR_PAIR(1));
+                mvaddch(y, x, ' ');
+                attroff(COLOR_PAIR(1));
+            } else if (x == 3 && (y >= l_racket &&  y <= l_racket + 2)) {
+                attron(COLOR_PAIR(2));
+                mvaddch(y, x, ' ');
+                attroff(COLOR_PAIR(2));
+            } else if (x == WIDTH - 4 && (y >= r_racket &&  y <= r_racket + 2)) {
+                attron(COLOR_PAIR(22));
+                mvaddch(y, x, ' ');
+                attroff(COLOR_PAIR(22));
             } else if (x == x_ball && y == y_ball) {
-                mvaddch(y, x, '@');
+                attron(COLOR_PAIR(3));
+                mvaddch(y, x, 'o');
+                attroff(COLOR_PAIR(3));
             } else if (x == WIDTH/2) {
                 mvaddch(y, x, '.');
             }
         }
     }
+    printw("\n");
+    printw("\n");
 } 
 
 void series() {
@@ -95,13 +113,13 @@ void ball_move() {
     if (y_ball >= HEIGHT -2) dy = -1;
 
     if (x_ball == 4) {
-        if (y_ball == l_racket || y_ball == l_racket-1 || y_ball == l_racket +1) {
+        if (y_ball >= l_racket - 1 && y_ball <= l_racket + 3) {
             dx = 1;
         }
     }
 
-    if (x_ball == WIDTH - 6) {
-        if (y_ball == r_racket || y_ball == r_racket-1 || y_ball == r_racket +1) {
+    if (x_ball == WIDTH - 5) {
+        if (y_ball >= r_racket - 1 && y_ball <= r_racket + 3) {
             dx = -1;
         }
     }

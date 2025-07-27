@@ -3,14 +3,13 @@
 
 #define WIDTH 80
 #define HEIGHT 25
-#define MIDDLE 25 
 
 int x_ball = WIDTH/2;
 int y_ball = HEIGHT/2;
 int r_racket = HEIGHT/2;
 int l_racket = HEIGHT/2;
 
-int dx = 1;
+int dx = -1;
 int dy = -1;
 
 int l_res = 0;
@@ -19,9 +18,8 @@ int r_res = 0;
 void draw_pong();
 void series();
 void pong();
-void _move();
-void gameover();
-void p_win();
+void ball_move();
+int racketball_move();
 
 int main() {
     initscr();
@@ -33,12 +31,10 @@ int main() {
 
 void pong() {
     series();
-    gameover();
 }
 
 void draw_pong() {
     clear();
-
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
             if (y == 0 || y == HEIGHT - 1) {
@@ -61,17 +57,34 @@ void draw_pong() {
 void series() {
     while(!(l_res >= 5 || r_res >= 5)) {
         draw_pong();
-        char c = getch();
-        if (c == 'A' || c == 'a') --l_racket;
-        if (c == 'Z' || c == 'z') ++l_racket;
-        if (c == 'K' || c == 'k') --r_racket;
-        if (c == 'M' || c == 'm') ++r_racket;
-        if (c == 'Q' || c == 'q') break;
-        _move();
+
+        ball_move();
+        if(!(racketball_move())) {
+        break;
+        }
     }
 }
 
-void _move() {
+int racketball_move() {
+    char c = getch();
+    if (c == 'A' || c == 'a') {
+        --l_racket;
+        return 1;
+    } else if (c == 'Z' || c == 'z') {
+        ++l_racket;
+        return 1;
+    } else if (c == 'K' || c == 'k') {
+        --r_racket;
+        return 1;
+    } else if (c == 'M' || c == 'm') {
+        ++r_racket;
+        return 1;
+    } else if (c == 'Q' || c == 'q') {
+        return 0;
+    }
+}
+
+void ball_move() {
     x_ball += dx;
     y_ball += dy;
 
@@ -102,16 +115,4 @@ void _move() {
         l_res += 1;
     }
 
-}
-
-void gameover() {
-    p_win(l_res, r_res);
-}
-
-void p_win(int a , int b) {
-    if (a > b) {
-        printf("\x1b[32m------------------------LEFT PLAYERS WIN!!!!-------------------------\x1b[0m\n\n");
-    } else {
-        printf("\x1b[32m------------------------RIGHT PLAYERS WIN!!!!-------------------------\x1b[0m\n\n");
-    }
 }

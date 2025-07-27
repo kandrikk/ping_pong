@@ -19,18 +19,22 @@ void draw_pong();
 void series();
 void pong();
 void ball_move();
-int racketball_move();
+int racket_move();
 
 int main() {
-    initscr();
-    noecho();
-    cbreak();
     pong();
     return 0;
 }
 
 void pong() {
+    initscr();
+    noecho();
+    cbreak();
+
     series();
+
+    endwin(); 
+    clear();
 }
 
 void draw_pong() {
@@ -52,20 +56,19 @@ void draw_pong() {
             }
         }
     }
-}  
+} 
 
 void series() {
     while(!(l_res >= 5 || r_res >= 5)) {
         draw_pong();
-
         ball_move();
-        if(!(racketball_move())) {
+        if(!(racket_move())) {
         break;
         }
     }
 }
 
-int racketball_move() {
+int racket_move() {
     char c = getch();
     if (c == 'A' || c == 'a') {
         --l_racket;

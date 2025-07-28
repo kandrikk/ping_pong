@@ -91,7 +91,6 @@ void series() {
         if (!(racket_move())) {
             break;
         }
-        mvaddstr(87, 6, "==ИНСТРУКЦИЯ==");
     }
 }
 

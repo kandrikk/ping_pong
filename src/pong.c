@@ -121,7 +121,7 @@ void ball_move() {
     y_ball += dy;
 
     if (y_ball <= 1) dy = 1;
-    if (y_ball >= HEIGHT -2) dy = -1;
+    if (y_ball >= HEIGHT - 2) dy = -1;
 
     if (x_ball == 4) {
         if (y_ball >= l_racket - 1 && y_ball <= l_racket + 3) {
@@ -165,8 +165,8 @@ void instruction(int l, int r) {
 mvaddstr(6 , 87 + u,  "====================");
 mvaddstr(7 , 87 + u,  "       SCORE:       ");
 mvaddstr(8 , 87 + u,  "====================");
-mvprintw(9 , 87 + u,  "=LEFT_PLAYER==== %d =", l);
-mvprintw(10 , 87 + u, "= %d ==RIGHT_PLAYER=", r);
+mvprintw(9 , 87 + u,  "=LEFT PLAYER+=== %d =", l);
+mvprintw(10 , 87 + u, "= %d ==RIGHT PLAYER=", r);
 
 mvaddstr(9 + b, 87 + u,  "");
 mvaddstr(10 + b, 87 + u, "CONTROL:");

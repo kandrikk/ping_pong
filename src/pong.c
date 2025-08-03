@@ -29,6 +29,7 @@ int main() {
 
 void pong() {
     initscr();
+    curs_set(0);
     start_color();
     init_pair(1, COLOR_YELLOW, COLOR_YELLOW);  // поле верх низ право лево
     init_pair(2, COLOR_RED, COLOR_RED);        // ракетки left
@@ -40,6 +41,7 @@ void pong() {
 
     noecho();
     cbreak();
+    timeout(75);
 
     series();
     clear();
@@ -161,7 +163,7 @@ void instruction(int l, int r) {
     mvaddstr(6, 87 + u, "====================");
     mvaddstr(7, 87 + u, "       SCORE:       ");
     mvaddstr(8, 87 + u, "====================");
-    mvprintw(9, 87 + u, "=LEFT PLAYER+=== %d =", l);
+    mvprintw(9, 87 + u, "=LEFT PLAYER==== %d =", l);
     mvprintw(10, 87 + u, "= %d ==RIGHT PLAYER=", r);
 
     mvaddstr(9 + b, 87 + u, "");

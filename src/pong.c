@@ -100,19 +100,16 @@ int racket_move() {
     char c = getch();
     if (c == 'A' || c == 'a') {
         --l_racket;
-        return 1;
     } else if (c == 'Z' || c == 'z') {
         ++l_racket;
-        return 1;
     } else if (c == 'K' || c == 'k') {
         --r_racket;
-        return 1;
     } else if (c == 'M' || c == 'm') {
         ++r_racket;
-        return 1;
     } else if (c == 'Q' || c == 'q') {
         return 0;
     }
+    return 1;
 }
 
 void ball_move() {

@@ -161,7 +161,7 @@ void instruction(int l, int r) {
     mvaddstr(7, 87 + u, "       SCORE:       ");
     mvaddstr(8, 87 + u, "====================");
     mvprintw(9, 87 + u, "=LEFT PLAYER==== %d =", l);
-    mvprintw(10, 87 + u, "= %d ==RIGHT PLAYER=", r);
+    mvprintw(10, 87 + u, "= %d ==RIGHT PLAYER==", r);
 
     mvaddstr(9 + b, 87 + u, "");
     mvaddstr(10 + b, 87 + u, "CONTROL:");
